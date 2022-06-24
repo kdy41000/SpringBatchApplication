@@ -1,0 +1,36 @@
+spring:
+  profiles:
+    active: mysql
+  jpa:
+    hibernate:
+      ddl-auto: update #create update none  https://smpark1020.tistory.com/140?category=857916 참고(위험한 기능이기 때문에 주의할 것!)
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      show-sql: true
+
+---
+spring:
+  config:
+      activate.on-profile: local
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      username: devyoung
+      password: 1234
+      driver-class-name: org.h2.Driver
+
+---
+spring:
+  config:
+    activate.on-profile: mysql
+  datasource:
+      url: jdbc:mysql://localhost:3306/springbatch?useUnicode=true&characterEncoding=utf8
+      username: devyoung
+      password: 1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  batch:
+    job:
+      names: ${job.name:NONE}
+      enabled: false
+    jdbc:
+      initialize-schema: always
